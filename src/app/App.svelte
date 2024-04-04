@@ -4,11 +4,18 @@
     //     '/': Counter,
     //     '/auth': Dastan,
     // }
+    import {AppBar, AppShell} from "@skeletonlabs/skeleton";
 </script>
 
 <main>
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
-<!--    <Router {routes} />-->
+    <AppShell>
+        <svelte:fragment slot="header">
+            <AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
+                <svelte:fragment slot="lead">(icon)</svelte:fragment>
+                (title)
+                <svelte:fragment slot="trail">(actions)</svelte:fragment>
+            </AppBar>
+        </svelte:fragment>
+        <h1>lol</h1>
+    </AppShell>
 </main>
