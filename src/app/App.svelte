@@ -1,10 +1,10 @@
 <script lang="ts">
     import {AppBar, AppShell} from "@skeletonlabs/skeleton";
     import {WalletMultiButton} from '@svelte-on-solana/wallet-adapter-ui'
-    import WalletConnection from "../core/wallet/WalletInit.svelte";
+    import WalletInit from "#/core/wallet/WalletInit.svelte";
 </script>
 
-<WalletConnection/>
+<WalletInit/>
 <AppShell>
     <svelte:fragment slot="header">
         <AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
