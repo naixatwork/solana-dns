@@ -2,6 +2,15 @@
     import {AppBar, AppShell} from "@skeletonlabs/skeleton";
     import {WalletMultiButton} from '@svelte-on-solana/wallet-adapter-ui'
     import WalletInit from "#/core/wallet/WalletInit.svelte";
+    import {programStore} from "#/core/program/program.store";
+    import {distinctUntilChanged, first, firstValueFrom} from "rxjs";
+    import {fromPromise} from "rxjs/internal/observable/innerFrom";
+
+    let dastan$ = firstValueFrom(fromPromise($programStore.account.domain.all()).pipe(
+        first(),
+        distinctUntilChanged(),
+    ));
+
 </script>
 
 <WalletInit/>
@@ -22,5 +31,15 @@
     </svelte:fragment>
     <div class="p-4 h-full">
         <h1>content</h1>
+        {#await dastan$}
+            <p>loading</p>
+        {:then domains}
+            {#each domains as domain, index}
+                <p>{index} {JSON.stringify(domain.account.expiresAt)}</p>
+            {/each}
+        {:catch error}
+            <p>lol</p>
+            {JSON.stringify(error)}
+        {/await}
     </div>
 </AppShell>

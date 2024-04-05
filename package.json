@@ -11,6 +11,7 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@skeletonlabs/skeleton": "^2.9.0",
     "@skeletonlabs/tw-plugin": "^0.3.1",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
@@ -32,11 +33,13 @@
     "vitest": "^1.4.0"
   },
   "dependencies": {
+    "@project-serum/anchor": "^0.26.0",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-wallets": "^0.19.32",
     "@solana/web3.js": "^1.91.4",
     "@svelte-on-solana/wallet-adapter-core": "^1.0.11-alpha.0",
     "@svelte-on-solana/wallet-adapter-ui": "^1.0.21-alpha.0",
+    "rxjs": "^7.8.1",
     "svelte-spa-router": "^4.0.1"
   }
 }
