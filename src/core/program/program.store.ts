@@ -18,15 +18,14 @@ export const anchorProviderStore = derived([walletStore, workSpace], ([$walletSt
         alchemyNetwork,
         "processed",
     );
-    console.log($workSpace)
     return new AnchorProvider(connection, $walletStore.wallet, {
         preflightCommitment: "processed",
     });
 });
 
 export const programStore = derived(
-    [workSpace, anchorProviderStore],
-    ([$workSpace, $anchorProviderStore]) => {
+    [anchorProviderStore],
+    ([$anchorProviderStore]) => {
         const dnsIdl = getDnsIdl();
         return new Program<Dns>(
             dnsIdl,

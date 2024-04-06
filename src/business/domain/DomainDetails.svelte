@@ -89,7 +89,7 @@
                                 {subDomain?.name} <span class="badge variant-filled-success uppercase">active</span></h3>
                         </div>
                         <div class="alert-actions">
-                            <a target="_blank" href={''} class="btn btn-icon variant-filled-primary">
+                            <a target="_blank" href={subDomain?.name} class="btn btn-icon variant-filled-primary">
                                 <Link/>
                             </a>
                         </div>

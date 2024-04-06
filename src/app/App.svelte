@@ -90,7 +90,7 @@
                        use:link
                        use:active={{
                     path: '/register/*',
-                    className: 'variant-filled-primary',
+                    className: 'variant-ghost-primary',
                     inactiveClassName: ''
                 }}>Register Domain</a>
                 </div>

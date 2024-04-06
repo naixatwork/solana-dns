@@ -12,13 +12,12 @@ describe(getDnsIdl.name, () => {
     });
 })
 
-// describe(`anchorProviderStore`, () => {
-//     test("it should return an object with type of an anchorProvider", () => new Promise((done) => {
-//         anchorProviderStore.subscribe((anchorProvider) => {
-//             expect(anchorProvider).toBeTruthy();
-//             expect(anchorProvider).toBeInstanceOf(AnchorProvider);
-//             console.log(anchorProvider)
-//             done('name')
-//         })
-//     }))
-// })
+describe(`anchorProviderStore`, () => {
+    test("it should return an object with type of an anchorProvider", () => new Promise((done) => {
+        anchorProviderStore.subscribe((anchorProvider) => {
+            expect(anchorProvider).toBeTruthy();
+            expect(anchorProvider).toBeInstanceOf(AnchorProvider);
+            done('name')
+        })
+    }))
+})
