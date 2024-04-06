@@ -8,6 +8,7 @@ export default defineConfig({
         svelte(),
     ],
     optimizeDeps: {
+        include: ['@project-serum/anchor', '@solana/web3.js', 'buffer'],
         esbuildOptions: {
             // Node.js global to browser globalThis
             define: {

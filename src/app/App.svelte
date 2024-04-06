@@ -8,6 +8,8 @@
     import active from 'svelte-spa-router/active'
     import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
     import {firstValueFrom, timeout, timer} from "rxjs";
+    import {AnchorConnectionProvider} from "@svelte-on-solana/wallet-adapter-anchor";
+    import {alchemyWallet, getDnsIdl} from "#/core/program/program.store";
 
     initializeStores();
     const toastStore = getToastStore();
@@ -48,6 +50,7 @@
     }
 </script>
 
+<AnchorConnectionProvider idl={getDnsIdl()} config="processed" network={alchemyWallet} />
 <Toast position="b"/>
 <WalletInit/>
 <AppShell>

@@ -3,8 +3,9 @@
     import {clusterApiUrl} from '@solana/web3.js'
     import {onMount} from "svelte";
     import type {Adapter} from "@solana/wallet-adapter-base";
+    import {alchemyWallet} from "#/core/program/program.store";
 
-    const network = clusterApiUrl('devnet')
+    const network = alchemyWallet
     const localStorageKey = 'solWalletAdapter'
     let wallets: Adapter[] = []
     onMount(async () => {
