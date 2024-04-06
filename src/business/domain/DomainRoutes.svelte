@@ -1,7 +1,7 @@
 <script lang="ts">
     import DomainList from "#/business/domain/DomainList.svelte";
     import DomainDetails from "#/business/domain/DomainDetails.svelte";
-    import Router, {replace} from "svelte-spa-router";
+    import Router from "svelte-spa-router";
     import wrap from "svelte-spa-router/wrap";
     import Redirect from "#/shared/router/Redirect.svelte";
 
@@ -10,7 +10,7 @@
         "/": wrap({
             component: Redirect,
             props: {
-                link: '/domain/list'
+                link: `${prefix}/list`
             }
         }),
         "/list": DomainList,

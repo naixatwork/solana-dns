@@ -1,13 +1,14 @@
 <script>
-	import {first, firstValueFrom} from "rxjs";
-	import {fade, slide} from 'svelte/transition';
-	import {fromPromise} from "rxjs/internal/observable/innerFrom";
-	import {programStore} from "#/core/program/program.store";
-	import {Globe, WifiOff} from "lucide-svelte";
+    import {first, firstValueFrom} from "rxjs";
+    import {fade, slide} from 'svelte/transition';
+    import {fromPromise} from "rxjs/internal/observable/innerFrom";
+    import {programStore} from "#/core/program/program.store";
+    import {Copy, Globe, WifiOff} from "lucide-svelte";
+    import {clipboard} from "@skeletonlabs/skeleton";
 
-	const domainList$ = firstValueFrom(
-		fromPromise($programStore.account.domain.all()).pipe(first())
-	)
+    const domainList$ = firstValueFrom(
+        fromPromise($programStore.account.domain.all()).pipe(first())
+    )
 </script>
 <h1 class="h1 mb-10">
     <span class="bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone uppercase">domains</span>
@@ -33,7 +34,10 @@
                 <div class="alert-message">
                     <h3 class="h3 flex items-center gap-2">
                         {domain.account.name} <span class="badge variant-filled-success uppercase">active</span></h3>
-                    <p class="truncate w-full">{domain.account.metadata}</p>
+                    <div class="flex gap-2 justify-center items-center">
+                        <button use:clipboard={domain.publicKey.toString()} type="button" class="btn-icon btn-icon-sm variant-glass-tertiary"><Copy size={16} /></button>
+                        <p class="truncate w-full">{domain.publicKey}</p>
+                    </div>
                 </div>
                 <div class="alert-actions">
                     <a href={`#/domain/${domain.publicKey}`} class="btn variant-filled-primary">Details</a>
