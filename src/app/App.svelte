@@ -2,9 +2,10 @@
     import {AppBar, AppShell} from "@skeletonlabs/skeleton";
     import {WalletMultiButton} from '@svelte-on-solana/wallet-adapter-ui'
     import WalletInit from "#/core/wallet/WalletInit.svelte";
-    import Router from 'svelte-spa-router'
+    import Router, {link} from 'svelte-spa-router'
     import wrap from "svelte-spa-router/wrap";
     import Redirect from "#/shared/router/Redirect.svelte";
+    import active from 'svelte-spa-router/active'
 
     const routes = {
         '/': wrap({
@@ -31,6 +32,26 @@
                     <img class="aspect-square w-10" src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=029"
                          alt="solana"/>
                     <p class="font-bold text-2xl">solana - dns</p>
+                </div>
+            </svelte:fragment>
+            <svelte:fragment slot="default">
+                <div class="flex gap-2">
+                    <a class="btn"
+                       href="/domain"
+                       use:link
+                       use:active={{
+                    path: '/domain/*',
+                    className: 'variant-ghost-primary',
+                    inactiveClassName: 'variant-glass'
+                }}>Public Domains</a>
+                    <a class="btn"
+                       href="/register"
+                       use:link
+                       use:active={{
+                    path: '/register/*',
+                    className: 'variant-filled-primary',
+                    inactiveClassName: ''
+                }}>Register Domain</a>
                 </div>
             </svelte:fragment>
             <svelte:fragment slot="trail">
