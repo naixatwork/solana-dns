@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
     import {first, firstValueFrom, tap} from "rxjs";
-    import {fade, slide} from 'svelte/transition';
+    import {slide} from 'svelte/transition';
     import {fromPromise} from "rxjs/internal/observable/innerFrom";
     import {programStore} from "#/core/program/program.store";
-    import {Globe, Link, AtSign, Link2, Copy} from "lucide-svelte";
+    import {AtSign, Globe, Link, Link2} from "lucide-svelte";
     import {Avatar} from "@skeletonlabs/skeleton";
 
     export let params = {
@@ -39,7 +39,8 @@
                 <div class="alert-message">
                     <h3 class="h3 flex items-center gap-2">
                         Name: {domain.profile.name} - <span
-                            class="badge variant-filled-tertiary uppercase">website: {domain.profile.website}</span></h3>
+                            class="badge variant-filled-tertiary uppercase">website: {domain.profile.website}</span>
+                    </h3>
                     <div class="flex flex-wrap gap-2 justify-center items-center">
                         <p class="truncate w-full">shortbio: {domain.profile.shortbio}</p>
                         <p class="truncate w-full">location: {domain.profile.location}</p>
@@ -85,7 +86,7 @@
                         </div>
                         <div class="alert-message">
                             <h3 class="h3 flex items-center gap-2">
-                                {subDomain} <span class="badge variant-filled-success uppercase">active</span></h3>
+                                {subDomain?.name} <span class="badge variant-filled-success uppercase">active</span></h3>
                         </div>
                         <div class="alert-actions">
                             <a target="_blank" href={''} class="btn btn-icon variant-filled-primary">

@@ -1,11 +1,10 @@
 <script lang="ts">
-    import {ConnectionProvider, WalletProvider} from '@svelte-on-solana/wallet-adapter-ui'
-    import {clusterApiUrl} from '@solana/web3.js'
+    import {WalletProvider} from '@svelte-on-solana/wallet-adapter-ui'
     import {onMount} from "svelte";
     import type {Adapter} from "@solana/wallet-adapter-base";
-    import {alchemyWallet} from "#/core/program/program.store";
+    import {alchemyNetwork, getDnsIdl} from "#/core/program/program.store";
+    import {AnchorConnectionProvider} from "@svelte-on-solana/wallet-adapter-anchor";
 
-    const network = alchemyWallet
     const localStorageKey = 'solWalletAdapter'
     let wallets: Adapter[] = []
     onMount(async () => {
@@ -15,4 +14,4 @@
 </script>
 
 <WalletProvider {localStorageKey} {wallets} autoConnect/>
-<ConnectionProvider {network}/>
+<AnchorConnectionProvider idl={getDnsIdl()} config="processed" network={alchemyNetwork}/>

@@ -7,9 +7,7 @@
     import Redirect from "#/shared/router/Redirect.svelte";
     import active from 'svelte-spa-router/active'
     import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
-    import {firstValueFrom, timeout, timer} from "rxjs";
-    import {AnchorConnectionProvider} from "@svelte-on-solana/wallet-adapter-anchor";
-    import {alchemyWallet, getDnsIdl} from "#/core/program/program.store";
+    import {firstValueFrom, timer} from "rxjs";
 
     initializeStores();
     const toastStore = getToastStore();
@@ -28,13 +26,28 @@
         }),
         '/register': wrap({
             asyncComponent: () => import('#/business/register/RegisterRoutes.svelte'),
+            conditions: [
+                async () => {
+                    await firstValueFrom(timer(300)); // todo: awful way to handle this.
+                    if (!$walletStore?.wallet?.connected) {
+                        toastStore.trigger({
+                            message: 'Connect your wallet.',
+                            background: 'variant-filled-error',
+                            timeout: 6000
+                        })
+                        replace('/').then()
+                        return false
+                    }
+                    return true
+                }
+            ]
         }),
         '/register/*': wrap({
             asyncComponent: () => import('#/business/register/RegisterRoutes.svelte'),
             conditions: [
                 async () => {
                     await firstValueFrom(timer(300)); // todo: awful way to handle this.
-                    if (!$walletStore.wallet) {
+                    if (!$walletStore?.wallet?.connected) {
                         toastStore.trigger({
                             message: 'Connect your wallet.',
                             background: 'variant-filled-error',
@@ -50,7 +63,6 @@
     }
 </script>
 
-<AnchorConnectionProvider idl={getDnsIdl()} config="processed" network={alchemyWallet} />
 <Toast position="b"/>
 <WalletInit/>
 <AppShell>
