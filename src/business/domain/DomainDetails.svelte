@@ -1,16 +1,16 @@
 <script>
-    import {first, firstValueFrom, tap} from "rxjs";
-    import {fromPromise} from "rxjs/internal/observable/innerFrom";
-    import {programStore} from "#/core/program/program.store";
+	import {first, firstValueFrom, tap} from "rxjs";
+	import {fromPromise} from "rxjs/internal/observable/innerFrom";
+	import {programStore} from "#/core/program/program.store";
 
-    export let params = {
-        publicKey: ''
-    }
-    const domainDetail$ = firstValueFrom(
-        fromPromise($programStore.account.domain.fetch(params.publicKey)).pipe(first(), tap((domainDetail) => {
-            console.log({domainDetail})
-        }))
-    )
+	export let params = {
+		publicKey: ''
+	}
+	const domainDetail$ = firstValueFrom(
+		fromPromise($programStore.account.domain.fetch(params.publicKey)).pipe(first(), tap((domainDetail) => {
+			console.log({domainDetail})
+		}))
+	)
 </script>
 
 <h1 class="h1 mb-10">

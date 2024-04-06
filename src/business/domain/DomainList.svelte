@@ -1,23 +1,23 @@
 <script>
-    import {first, firstValueFrom} from "rxjs";
-    import {fade, slide} from 'svelte/transition';
-    import {fromPromise} from "rxjs/internal/observable/innerFrom";
-    import {programStore} from "#/core/program/program.store";
-    import {Globe, WifiOff} from "lucide-svelte";
+	import {first, firstValueFrom} from "rxjs";
+	import {fade, slide} from 'svelte/transition';
+	import {fromPromise} from "rxjs/internal/observable/innerFrom";
+	import {programStore} from "#/core/program/program.store";
+	import {Globe, WifiOff} from "lucide-svelte";
 
-    const domainList$ = firstValueFrom(
-        fromPromise($programStore.account.domain.all()).pipe(first())
-    )
+	const domainList$ = firstValueFrom(
+		fromPromise($programStore.account.domain.all()).pipe(first())
+	)
 </script>
 <h1 class="h1 mb-10">
     <span class="bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone uppercase">domains</span>
 </h1>
 {#await domainList$}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div class="placeholder animate-pulse h-24" />
-        <div class="placeholder animate-pulse h-24" />
-        <div class="placeholder animate-pulse h-24" />
-        <div class="placeholder animate-pulse h-24" />
+        <div class="placeholder animate-pulse h-24"/>
+        <div class="placeholder animate-pulse h-24"/>
+        <div class="placeholder animate-pulse h-24"/>
+        <div class="placeholder animate-pulse h-24"/>
     </div>
 {:then domains}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">

@@ -4,6 +4,7 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
+    "strict": true,
     "resolveJsonModule": true,
     "types": ["vitest/globals", "node", "jest", "@testing-library/jest-dom"],
     /**

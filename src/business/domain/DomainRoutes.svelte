@@ -18,4 +18,4 @@
     }
 </script>
 
-<Router {routes} {prefix} />
+<Router {routes} {prefix}/>
