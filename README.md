@@ -1,23 +1,46 @@
 # Documentation - solanaDns
 
+### todos
+
+- [x] domains
+- [ ] register domains
+- [ ] init dns
+- [x] architecture
+- [x] tailwind, scss, ui library
+- [ ] logging
+- [x] vitest, testing
+- [x] documentation
+
 ### Architecture and Philosophy
-on average human brain cannot process more than 5 tasks at the same time, that's why there are 5 folders or `layers` inside `src` directory.
+
+on average human brain cannot process more than 5 tasks at the same time, that's why there are 5 folders or `layers`
+inside `src` directory.
 
 the `layers` are:
+
 - `app`
 - `business`
 - `core`
 - `shared`
 - `node-modules (hidden)`
 
-each `layer` has its own rules, and it's corresponding rules when it comes to other `layers` they generally help us determine which high level or low level code belongs where.
+each `layer` has its own rules, and it's corresponding rules when it comes to other `layers` they generally help us
+determine which high level or low level code belongs where.
+
 #### Relationship rules
-- `import` has to always happen from top (`app`) to bottom (`node-modules`) this rule prevents any **circular dependency,** and it gives a clear way to determine if code is meant to be **low-level** or **high-level** .
-- each `layer` or `sub_layer` should **provide** not **contain** code for example a `layer` with name `component` or `utils` just contains/categorize code it doesn't give any idea or context.
+
+- `import` has to always happen from top (`app`) to bottom (`node-modules`) this rule prevents any **circular
+  dependency,** and it gives a clear way to determine if code is meant to be **low-level** or **high-level** .
+- each `layer` or `sub_layer` should **provide** not **contain** code for example a `layer` with name `component`
+  or `utils` just contains/categorize code it doesn't give any idea or context.
+
 #### Single rules
-- `app` represents the starting point of the software and holds `main.ts` almost every configuration can happen at this level such as `routing` or `layout`.
+
+- `app` represents the starting point of the software and holds `main.ts` almost every configuration can happen at this
+  level such as `routing` or `layout`.
     - `app` is high-level.
-    - normally frontend applications will be tested all the time by **product** and **QA team**  we can trust high-level code will be tested **manually**. 
+    - normally frontend applications will be tested all the time by **product** and **QA team**  we can trust high-level
+      code will be tested **manually**.
 - `business` will provide business logic for example various features that software provides and makes money of.
     - `business` is high-level.
     - `integration testing` and `e2e` testing would be more suited for this layer.
@@ -30,6 +53,7 @@ each `layer` has its own rules, and it's corresponding rules when it comes to ot
     - there should be no `logging` done in `shared`.
 
 ### File and Folder Structures:
+
 - follows the `LIFT` style guide from https://angular.io/guide/styleguide#lift
     - Locate
     - Identify
@@ -38,6 +62,7 @@ each `layer` has its own rules, and it's corresponding rules when it comes to ot
     - sibling tests
 
 ### Paradigms
+
 - `functional programming`
     - Stratified design
     - Straightforward implementation
@@ -50,6 +75,7 @@ each `layer` has its own rules, and it's corresponding rules when it comes to ot
     - https://www.youtube.com/watch?v=QM1iUe6IofM
 
 ### Clean Code Guidelines
+
 - immutability
     - copy-on-write
 - favor `explicit argument` over `implicit argument`
@@ -61,4 +87,5 @@ each `layer` has its own rules, and it's corresponding rules when it comes to ot
 - `unit tests` for low level code
 
 ### Git
+
 - commit messages follow the conventional commit guideline https://www.conventionalcommits.org/en/v1.0.0/

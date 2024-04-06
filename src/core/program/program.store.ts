@@ -1,5 +1,5 @@
 import {derived} from "svelte/store";
-import {clusterApiUrl, Connection, PublicKey} from "@solana/web3.js";
+import {clusterApiUrl, Connection} from "@solana/web3.js";
 import DnsIdl from "#/core/program/dns.json";
 import {AnchorProvider, Program} from "@project-serum/anchor";
 import type {Dns} from "#/core/program/dns";
@@ -19,11 +19,21 @@ export const anchorProviderStore = derived(walletStore, ($walletStore) => {
     }
 )
 
-export const programStore = derived(anchorProviderStore, ($anchorProviderStore) => {
+export const programStore = derived([anchorProviderStore, walletStore], ([$anchorProviderStore, $walletStore]) => {
     const dnsIdl = getDnsIdl()
-    return new Program<Dns>(
+    const program = new Program<Dns>(
         dnsIdl,
         dnsIdl.metadata.address,
         $anchorProviderStore
     ) as Program<Dns>
+
+    // if ($walletStore.publicKey) {
+    //     program.methods.initDns(['sol']).accounts({
+    //         dnsState: getDnsIdl().metadata.address,
+    //         systemProgram: anchor.web3.SystemProgram.programId,
+    //         signer: $walletStore.publicKey.toString()
+    //     }).rpc().then(console.log)
+    // }
+
+    return program
 })

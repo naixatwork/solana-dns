@@ -4,6 +4,9 @@
     import Router from "svelte-spa-router";
     import wrap from "svelte-spa-router/wrap";
     import Redirect from "#/shared/router/Redirect.svelte";
+    import {getToastStore} from "@skeletonlabs/skeleton";
+    import {onMount} from "svelte";
+    const toastStore = getToastStore();
 
     const prefix = "/domain"
     const routes = {

@@ -11,9 +11,7 @@
     }
 
     const domainDetail$ = firstValueFrom(
-        fromPromise($programStore.account.domain.fetch(params.publicKey)).pipe(first(), tap((domainDetail) => {
-            console.log({domainDetail})
-        }))
+        fromPromise($programStore.account.domain.fetch(params.publicKey)).pipe(first(), tap(console.log))
     )
 </script>
 

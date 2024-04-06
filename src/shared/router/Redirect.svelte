@@ -5,7 +5,6 @@
     export let link = ''
 
     onMount(() => {
-        console.log(link)
         push(link)
     })
 </script>
