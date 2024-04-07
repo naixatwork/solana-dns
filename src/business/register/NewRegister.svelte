@@ -4,13 +4,13 @@
     import {onMount} from "svelte";
     import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
 
-    console.log('called')
     onMount(async () => {
-        $programStore.methods.initDns(['sol']).accounts({
-            dnsState: $walletStore.wallet?.publicKey,
-            signer: $workSpace?.baseAccount?.publicKey,
-            systemProgram: $workSpace?.systemProgram?.programId
-        }).signers([$workSpace?.baseAccount]).rpc().then(console.log).catch(console.log)
+        $programStore.methods.setPrimaryDomain("alchemy").accounts({
+            systemProgram: $workSpace.systemProgram.programId,
+            domain: $walletStore.wallet?.publicKey,
+            primaryDomain: $walletStore.wallet?.publicKey,
+            authority: $walletStore.wallet?.publicKey
+        }).signers([$workSpace.baseAccount]).rpc().then(console.log).catch(console.log)
     })
 </script>
 

@@ -4,10 +4,10 @@ import {AnchorProvider, Program} from "@project-serum/anchor";
 import type {Dns} from "#/core/program/dns";
 import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
 import {workSpace} from "@svelte-on-solana/wallet-adapter-anchor"
-import {clusterApiUrl, Connection} from "@solana/web3.js";
+import {Connection} from "@solana/web3.js";
 
 export const alchemyNetwork =
-    "https://solana-devnet.g.alchemy.com/v2/TOJq9GCKOuIAIG2cXDDqLhtbGkBzJmR-";
+    "https://solana-devnet.g.alchemy.com/v2/Tx4DSX20gm4iWR0euk93Q1cdIHF_sz-f";
 
 export const getDnsIdl = (): typeof DnsIdl & Dns => {
     return DnsIdl as typeof DnsIdl & Dns;
