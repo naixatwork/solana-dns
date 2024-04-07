@@ -1,6 +1,6 @@
 <script lang="ts">
     import {Server, ServerCog, ServerCrash} from "lucide-svelte";
-    import {delay, first, firstValueFrom, map, tap} from "rxjs";
+    import {catchError, delay, first, firstValueFrom, map, tap} from "rxjs";
     import {fromPromise} from "rxjs/internal/observable/innerFrom";
     import {programStore} from "#/core/program/program.store";
     import {getToastStore, type PopupSettings} from "@skeletonlabs/skeleton";

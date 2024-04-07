@@ -5,6 +5,7 @@
     import dnsStateStore from "#/business/dns/dnsState.store";
     import {fromPromise} from "rxjs/internal/observable/innerFrom";
     import {getToastStore} from "@skeletonlabs/skeleton";
+    import logger, {error, info} from "#/shared/log/logger";
 
     const toastStore = getToastStore()
     const reInitializeDnsState = async () => {
@@ -33,14 +34,15 @@
             .signers([$workSpace.baseAccount])
             .rpc())
             .subscribe({
-                next: () => {
+                next: (response) => {
+                    logger(info, "reInitializeDnsState", "reinitialized", {response})
                     toastStore.trigger({
                         message: "Reinitialized DNS state",
                         background: "variant-filled-success"
                     })
                 },
                 error: (err) => {
-                    console.log(err)
+                    logger(error, "reInitializeDnsState", "Already Initialized", {err})
                     toastStore.trigger({
                         message: `Already Initialized`,
                         background: "variant-filled-error"

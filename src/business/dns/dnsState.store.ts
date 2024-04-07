@@ -1,6 +1,6 @@
 import {writable} from 'svelte/store'
-import type {Dns} from "#/core/program/dns";
-import {Keypair, type PublicKey} from "@solana/web3.js";
+import {type PublicKey} from "@solana/web3.js";
+import logger, {info} from "#/shared/log/logger";
 
 export type DnsState = {
     publicKey: PublicKey | null,
@@ -12,4 +12,9 @@ const dnsStateStore = writable<DnsState>({
     account: {}
 })
 
+dnsStateStore.subscribe((dnsState) => {
+    logger(info, "reacting to dnsStateStore", {dnsState})
+})
+
 export default dnsStateStore
+

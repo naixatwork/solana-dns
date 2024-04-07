@@ -13,6 +13,7 @@
     import LoadingRoute from "#/shared/router/LoadingRoute.svelte";
     import {NETWORK} from "#/app/main";
     import {networkStore} from "#/core/program/program.store";
+    import logger, {info} from "#/shared/log/logger";
 
     networkStore.set(NETWORK)
     initializeStores();
