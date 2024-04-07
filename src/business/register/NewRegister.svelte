@@ -8,7 +8,6 @@
     onMount(async () => {
         $programStore.account.dnsState.all().then(console.log)
         const dnsState = await $programStore.account.dnsState.all()
-
         $programStore.methods.initDns(['sol', 'solana', 'mvx']).accounts({
             dnsState: dnsState[0].publicKey,
             signer: $workSpace.baseAccount.publicKey,

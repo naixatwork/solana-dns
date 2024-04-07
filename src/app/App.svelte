@@ -8,8 +8,13 @@
     import active from 'svelte-spa-router/active'
     import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
     import {first, firstValueFrom, map, timer} from "rxjs";
+    import DnsState from "#/business/dns/DnsState.svelte";
+    import {computePosition, autoUpdate, offset, shift, flip, arrow} from '@floating-ui/dom';
+
+    import {storePopup} from '@skeletonlabs/skeleton';
 
     initializeStores();
+    storePopup.set({computePosition, autoUpdate, offset, shift, flip, arrow});
     const toastStore = getToastStore();
     const routes = {
         '/': wrap({
@@ -31,7 +36,7 @@
                 async () => {
                     const result = await firstValueFrom(timer(300)
                         .pipe(
-                            map(() =>  $walletStore.connected),
+                            map(() => $walletStore.connected),
                             first()
                         )
                     )
@@ -54,7 +59,7 @@
                 async () => {
                     const result = await firstValueFrom(timer(300)
                         .pipe(
-                            map(() =>  $walletStore.connected),
+                            map(() => $walletStore.connected),
                             first()
                         )
                     )
@@ -92,18 +97,20 @@
                        href="/domain"
                        use:link
                        use:active={{
-                    path: '/domain/*',
-                    className: 'variant-ghost-primary',
-                    inactiveClassName: 'variant-glass'
-                }}>Public Domains</a>
+                        path: '/domain/*',
+                        className: 'variant-ghost-primary',
+                        inactiveClassName: 'variant-glass'
+                    }}>Public Domains</a>
                     <a class="btn"
                        href="/register"
                        use:link
                        use:active={{
-                    path: '/register/*',
-                    className: 'variant-ghost-primary',
-                    inactiveClassName: ''
-                }}>Register Domain</a>
+                        path: '/register/*',
+                        className: 'variant-ghost-primary',
+                        inactiveClassName: ''
+                    }}>Register Domain</a>
+                    <span class="divider-vertical me-6 "/>
+                    <DnsState/>
                 </div>
             </svelte:fragment>
             <svelte:fragment slot="trail">
