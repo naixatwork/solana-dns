@@ -10,6 +10,7 @@
 - [ ] logging
 - [x] vitest, testing
 - [x] documentation
+- [ ] responsiveness
 
 ### Architecture and Philosophy
 
