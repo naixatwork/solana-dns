@@ -7,7 +7,9 @@
     import Redirect from "#/shared/router/Redirect.svelte";
     import active from 'svelte-spa-router/active'
     import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
-    import {firstValueFrom, timer} from "rxjs";
+    import {filter, first, firstValueFrom, lastValueFrom, map, of, timeout, timer} from "rxjs";
+    import {workSpace} from "@svelte-on-solana/wallet-adapter-anchor";
+    import {fromPromise} from "rxjs/internal/observable/innerFrom";
 
     initializeStores();
     const toastStore = getToastStore();
@@ -28,8 +30,13 @@
             asyncComponent: () => import('#/business/register/RegisterRoutes.svelte'),
             conditions: [
                 async () => {
-                    await firstValueFrom(timer(300)); // todo: awful way to handle this.
-                    if (!$walletStore?.wallet?.connected) {
+                    const result = await firstValueFrom(timer(300)
+                        .pipe(
+                            map(() =>  $walletStore.connected),
+                            first()
+                        )
+                    )
+                    if (!result) {
                         toastStore.trigger({
                             message: 'Connect your wallet.',
                             background: 'variant-filled-error',
@@ -46,8 +53,13 @@
             asyncComponent: () => import('#/business/register/RegisterRoutes.svelte'),
             conditions: [
                 async () => {
-                    await firstValueFrom(timer(300)); // todo: awful way to handle this.
-                    if (!$walletStore?.wallet?.connected) {
+                    const result = await firstValueFrom(timer(300)
+                        .pipe(
+                            map(() =>  $walletStore.connected),
+                            first()
+                        )
+                    )
+                    if (!result) {
                         toastStore.trigger({
                             message: 'Connect your wallet.',
                             background: 'variant-filled-error',
