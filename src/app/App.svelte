@@ -112,9 +112,9 @@
                        use:active={{
                         path: '/register/*',
                         className: 'variant-ghost-primary',
-                        inactiveClassName: ''
+                        inactiveClassName: 'variant-glass'
                     }}>Register Domain</a>
-                    <span class="divider-vertical me-6 "/>
+                    <span class="divider-vertical mx-2 "/>
                     <DnsState/>
                 </div>
             </svelte:fragment>

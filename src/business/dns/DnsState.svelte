@@ -65,5 +65,7 @@
             <h5 class="h5 capitalize">reinitialize DNS state</h5>
             <ReInitializeDnsState />
         </div>
+        {:catch error}
+        <p class="text-xl text-error-400-500-token">Error while loading DNS state</p>
     {/await}
 </div>

@@ -4,13 +4,14 @@
 
 - [x] domains
 - [ ] register domains
-- [ ] init dns
+- [x] init dns
 - [x] architecture
 - [x] tailwind, scss, ui library
 - [ ] logging
 - [x] vitest, testing
 - [x] documentation
 - [ ] responsiveness
+- [ ] separate devnet from mainnet via `.env`
 
 ### Architecture and Philosophy
 
