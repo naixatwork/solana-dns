@@ -4,13 +4,14 @@
     import {onMount} from "svelte";
     import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
 
-    // onMount(async () => {
-    //     $programStore.methods.initDns(['sol']).accounts({
-    //         dnsState: $walletStore.wallet?.publicKey,
-    //         signer: $workSpace?.baseAccount?.publicKey,
-    //         systemProgram: $workSpace?.systemProgram?.programId
-    //     }).signers([$workSpace?.baseAccount]).rpc().then(console.log).catch(console.log)
-    // })
+    console.log('called')
+    onMount(async () => {
+        $programStore.methods.initDns(['sol']).accounts({
+            dnsState: $walletStore.wallet?.publicKey,
+            signer: $workSpace?.baseAccount?.publicKey,
+            systemProgram: $workSpace?.systemProgram?.programId
+        }).signers([$workSpace?.baseAccount]).rpc().then(console.log).catch(console.log)
+    })
 </script>
 
 <h1>lol</h1>

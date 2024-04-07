@@ -7,9 +7,7 @@
     import Redirect from "#/shared/router/Redirect.svelte";
     import active from 'svelte-spa-router/active'
     import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
-    import {filter, first, firstValueFrom, lastValueFrom, map, of, timeout, timer} from "rxjs";
-    import {workSpace} from "@svelte-on-solana/wallet-adapter-anchor";
-    import {fromPromise} from "rxjs/internal/observable/innerFrom";
+    import {first, firstValueFrom, map, timer} from "rxjs";
 
     initializeStores();
     const toastStore = getToastStore();
@@ -20,6 +18,7 @@
                 link: '/domain'
             }
         }),
+        /** documentation itself uses this api for handling nested routes. */
         '/domain': wrap({
             asyncComponent: () => import('#/business/domain/DomainRoutes.svelte'),
         }),

@@ -3,6 +3,7 @@
     import wrap from "svelte-spa-router/wrap";
     import Redirect from "#/shared/router/Redirect.svelte";
     import NewRegister from "#/business/register/NewRegister.svelte";
+    import {getToastStore} from "@skeletonlabs/skeleton";
 
     const prefix = "/register"
     const routes = {
