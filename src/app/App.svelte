@@ -12,6 +12,7 @@
     import {computePosition, autoUpdate, offset, shift, flip, arrow} from '@floating-ui/dom';
 
     import {storePopup} from '@skeletonlabs/skeleton';
+    import LoadingRoute from "#/shared/router/LoadingRoute.svelte";
 
     initializeStores();
     storePopup.set({computePosition, autoUpdate, offset, shift, flip, arrow});
@@ -26,15 +27,18 @@
         /** documentation itself uses this api for handling nested routes. */
         '/domain': wrap({
             asyncComponent: () => import('#/business/domain/DomainRoutes.svelte'),
+            loadingComponent: LoadingRoute,
         }),
         '/domain/*': wrap({
-            asyncComponent: () => import('#/business/domain/DomainRoutes.svelte')
+            asyncComponent: () => import('#/business/domain/DomainRoutes.svelte'),
+            loadingComponent: LoadingRoute,
         }),
         '/register': wrap({
             asyncComponent: () => import('#/business/register/RegisterRoutes.svelte'),
+            loadingComponent: LoadingRoute,
             conditions: [
                 async () => {
-                    const result = await firstValueFrom(timer(300)
+                    const result = await firstValueFrom(timer(500)
                         .pipe(
                             map(() => $walletStore.connected),
                             first()
@@ -55,9 +59,10 @@
         }),
         '/register/*': wrap({
             asyncComponent: () => import('#/business/register/RegisterRoutes.svelte'),
+            loadingComponent: LoadingRoute,
             conditions: [
                 async () => {
-                    const result = await firstValueFrom(timer(300)
+                    const result = await firstValueFrom(timer(500)
                         .pipe(
                             map(() => $walletStore.connected),
                             first()
