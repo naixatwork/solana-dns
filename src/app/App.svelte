@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {AppBar, AppShell, getToastStore, initializeStores, Toast} from "@skeletonlabs/skeleton";
+    import {AppBar, AppShell, getToastStore, initializeStores, storePopup, Toast} from "@skeletonlabs/skeleton";
     import {WalletMultiButton} from '@svelte-on-solana/wallet-adapter-ui'
     import WalletInit from "#/core/wallet/WalletInit.svelte";
     import Router, {link, replace} from 'svelte-spa-router'
@@ -9,11 +9,12 @@
     import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
     import {first, firstValueFrom, map, timer} from "rxjs";
     import DnsState from "#/business/dns/DnsState.svelte";
-    import {computePosition, autoUpdate, offset, shift, flip, arrow} from '@floating-ui/dom';
-
-    import {storePopup} from '@skeletonlabs/skeleton';
+    import {arrow, autoUpdate, computePosition, flip, offset, shift} from '@floating-ui/dom';
     import LoadingRoute from "#/shared/router/LoadingRoute.svelte";
+    import {NETWORK} from "#/app/main";
+    import {networkStore} from "#/core/program/program.store";
 
+    networkStore.set(NETWORK)
     initializeStores();
     storePopup.set({computePosition, autoUpdate, offset, shift, flip, arrow});
     const toastStore = getToastStore();
@@ -85,7 +86,7 @@
 </script>
 
 <Toast position="b"/>
-<WalletInit/>
+<WalletInit network={NETWORK} />
 <AppShell>
     <svelte:fragment slot="header">
         <AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">

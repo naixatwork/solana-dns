@@ -11,7 +11,8 @@
 - [x] vitest, testing
 - [x] documentation
 - [ ] responsiveness
-- [ ] separate devnet from mainnet via `.env`
+- [x] separate devnet from mainnet via `.env`
+- [ ] if possible fix force npm install issue
 
 ### Architecture and Philosophy
 
