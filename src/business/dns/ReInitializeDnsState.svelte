@@ -34,9 +34,11 @@
         /* throws constraint seeds? */
         // const dnsStatePDA = await PublicKey.createWithSeed($dnsStateStore.publicKey, 'dns_state', $programStore.programId);
 
+        const [dnsStatePDA] = PublicKey.findProgramAddressSync([Buffer.from('dns_state')], $programStore.programId)
+
         fromPromise($programStore.methods.initDns(topDomains).accounts({
-            dnsState: $dnsStateStore?.publicKey, // weird, only for testing
-            // dnsState: dnsStatePDA,
+            // dnsState: $dnsStateStore?.publicKey, // weird, only for testing
+            dnsState: dnsStatePDA,
             signer: $workSpace?.baseAccount?.publicKey,
             systemProgram: web3.SystemProgram.programId
         })

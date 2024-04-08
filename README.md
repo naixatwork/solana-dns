@@ -5,7 +5,7 @@
 - [x] public domains
 - [ ] register domains
 - [x] init dns
-  - [x] use PDA 
+  - [x] use PDA `PublicKey.findProgramAddressSync`
 - [x] architecture
 - [x] tailwind, scss, ui library
 - [x] logging

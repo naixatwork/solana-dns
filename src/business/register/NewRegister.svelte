@@ -7,6 +7,7 @@
     import {Keypair, PublicKey} from "@solana/web3.js";
     import {TOKEN_PROGRAM_ID} from "@solana/spl-token";
     import base58 from "bs58";
+    import { utf8 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 
     onMount(() => {
         $programStore.account.adminConfig.all().then(console.log)
@@ -17,22 +18,19 @@
         if (!$workSpace.baseAccount) return;
         if (!$dnsStateStore.publicKey) return;
         const domainSeed = 'domain';
-        const dnsStateSeed = 'dns_state';
-        const name = 'name'
-        const domainSeeds = [Buffer.from(dnsStateSeed), Buffer.from(domainSeed), Buffer.from(name)];
-        console.log($programStore.programId.toString())
-        const domainPDA = PublicKey.createProgramAddressSync(domainSeeds, $programStore.programId /*7Af91tKWF5mUN69h6EJf3xp1nNjyjCgkbR1XygkgmNCL*/);
+        const name = 'birthday'
+        const domainSeeds = [utf8.encode(domainSeed), utf8.encode(name)];
+        const domainPDA = PublicKey.findProgramAddressSync(domainSeeds, $programStore.programId);
         console.log(domainPDA.toString())
-        $programStore.account.adminConfig.all().then(console.log)
         await $programStore.methods.registerDomain(
-            'birthday',
+            name,
             1,
-            $workSpace.baseAccount.publicKey,
+            Keypair.generate().publicKey,
             "https://sara-bday.vercel.app/game",
             "birthday game",
             "sol"
         ).accounts({
-            domain: domainPDA, // E8CJKMLpZbzZwWXYHvSAs1vsFYKZUmBbdnHpyChaPmzk
+            domain: domainPDA[0], // 7mVMZigL4aWkocgAhec3jqsGdwLKfwpWd1i6oQzdR7pj
             state: $dnsStateStore.publicKey,
             receiver: $workSpace.baseAccount.publicKey,
             authority: $workSpace.baseAccount.publicKey,
