@@ -7,7 +7,7 @@
     import {Keypair, PublicKey} from "@solana/web3.js";
     import {TOKEN_PROGRAM_ID} from "@solana/spl-token";
     import base58 from "bs58";
-    import { utf8 } from "@project-serum/anchor/dist/cjs/utils/bytes";
+    import {utf8} from "@project-serum/anchor/dist/cjs/utils/bytes";
 
     onMount(() => {
         $programStore.account.adminConfig.all().then(console.log)
@@ -20,8 +20,7 @@
         const domainSeed = 'domain';
         const name = 'birthday'
         const domainSeeds = [utf8.encode(domainSeed), utf8.encode(name)];
-        const domainPDA = PublicKey.findProgramAddressSync(domainSeeds, $programStore.programId);
-        console.log(domainPDA.toString())
+        const [domainPDA] = PublicKey.findProgramAddressSync(domainSeeds, $programStore.programId);
         await $programStore.methods.registerDomain(
             name,
             1,
@@ -30,7 +29,7 @@
             "birthday game",
             "sol"
         ).accounts({
-            domain: domainPDA[0], // 7mVMZigL4aWkocgAhec3jqsGdwLKfwpWd1i6oQzdR7pj
+            domain: domainPDA,
             state: $dnsStateStore.publicKey,
             receiver: $workSpace.baseAccount.publicKey,
             authority: $workSpace.baseAccount.publicKey,

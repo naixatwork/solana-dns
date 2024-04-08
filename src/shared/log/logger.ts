@@ -1,7 +1,7 @@
 export type LoggingFunction = (time: string, context: string, args: any[]) => void
 
 export const info: LoggingFunction = (time: string, context: string, args: any[]) => {
-    console.groupCollapsed(`%c ${time} INFO [${context}]`, "color:#60a5fa")
+    console.group(`%c ${time} INFO [${context}]`, "color:#60a5fa")
     for (const argument of args) {
         console.log(argument)
     }
@@ -9,7 +9,7 @@ export const info: LoggingFunction = (time: string, context: string, args: any[]
 }
 
 export const error: LoggingFunction = (time: string, context: string, args: any[]) => {
-    console.groupCollapsed(`%c ${time} ERROR in [${context}]`, "color:#f43f5e")
+    console.group(`%c ${time} ERROR in [${context}]`, "color:#f43f5e")
     console.count('ERROR Count')
     for (const argument of args) {
         console.log(argument)
