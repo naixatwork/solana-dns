@@ -6,6 +6,8 @@
     import {fromPromise} from "rxjs/internal/observable/innerFrom";
     import {getToastStore} from "@skeletonlabs/skeleton";
     import logger, {error, info} from "#/shared/log/logger";
+    import {PublicKey} from "@solana/web3.js";
+    import * as anchor from "@project-serum/anchor"
 
     const toastStore = getToastStore()
     const reInitializeDnsState = async () => {
@@ -26,8 +28,15 @@
 
         const topDomains = $dnsStateStore.account?.allowedTopDomains as string[]
 
+        /* throws Error: Invalid seeds, address must fall off the curve*/
+        // const dnsStatePDA = PublicKey.createProgramAddressSync([Buffer.from('dns_state')], $programStore.programId);
+
+        /* throws constraint seeds? */
+        // const dnsStatePDA = await PublicKey.createWithSeed($dnsStateStore.publicKey, 'dns_state', $programStore.programId);
+
         fromPromise($programStore.methods.initDns(topDomains).accounts({
             dnsState: $dnsStateStore?.publicKey, // weird, only for testing
+            // dnsState: dnsStatePDA,
             signer: $workSpace?.baseAccount?.publicKey,
             systemProgram: web3.SystemProgram.programId
         })

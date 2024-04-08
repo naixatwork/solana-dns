@@ -2,12 +2,13 @@
 
 ### todos
 
-- [x] domains
+- [x] public domains
 - [ ] register domains
 - [x] init dns
+  - [x] use PDA 
 - [x] architecture
 - [x] tailwind, scss, ui library
-- [ ] logging
+- [x] logging
 - [x] vitest, testing
 - [x] documentation
 - [ ] responsiveness

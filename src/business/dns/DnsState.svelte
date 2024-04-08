@@ -1,10 +1,9 @@
 <script lang="ts">
     import {Server, ServerCog, ServerCrash} from "lucide-svelte";
-    import {catchError, delay, first, firstValueFrom, map, tap} from "rxjs";
+    import {first, firstValueFrom, map, tap} from "rxjs";
     import {fromPromise} from "rxjs/internal/observable/innerFrom";
     import {programStore} from "#/core/program/program.store";
-    import {getToastStore, type PopupSettings} from "@skeletonlabs/skeleton";
-    import {popup} from "@skeletonlabs/skeleton"
+    import {getToastStore, popup, type PopupSettings} from "@skeletonlabs/skeleton";
     import dnsStateStore from "#/business/dns/dnsState.store";
     import ReInitializeDnsState from "#/business/dns/ReInitializeDnsState.svelte";
 
@@ -36,17 +35,17 @@
 {#await dnsState$}
     <button type="button" class="btn variant-glass-warning" use:popup={popupFeatured}>
         <span><ServerCog/></span>
-        <span class="uppercase">dns</span>
+        <span class="capitalize">reinitialize | <span class="uppercase">dns</span></span>
     </button>
 {:then dnsState}
     <button type="button" class="btn variant-ghost-success" use:popup={popupFeatured}>
         <span><Server/></span>
-        <span class="uppercase">dns</span>
+        <span class="capitalize">reinitialize | <span class="uppercase">dns</span></span>
     </button>
 {:catch error}
     <button type="button" class="btn variant-ghost-error" use:popup={popupFeatured}>
         <span><ServerCrash/></span>
-        <span class="uppercase">dns</span>
+        <span class="capitalize">reinitialize | <span class="uppercase">dns</span></span>
     </button>
 {/await}
 

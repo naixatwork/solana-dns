@@ -1,5 +1,5 @@
 <script>
-    import {first, firstValueFrom} from "rxjs";
+	import {first, firstValueFrom, tap} from "rxjs";
     import {fade, slide} from 'svelte/transition';
     import {fromPromise} from "rxjs/internal/observable/innerFrom";
     import {programStore} from "#/core/program/program.store";
@@ -7,7 +7,7 @@
     import {clipboard} from "@skeletonlabs/skeleton";
 
     const domainList$ = firstValueFrom(
-        fromPromise($programStore.account.domain.all()).pipe(first())
+        fromPromise($programStore.account.domain.all()).pipe(first(), tap(console.log))
     )
 </script>
 <h1 class="h1 mb-10">
