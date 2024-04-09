@@ -8,6 +8,7 @@
     import logger, {error, info} from "#/shared/log/logger";
     import {PublicKey} from "@solana/web3.js";
     import * as anchor from "@project-serum/anchor"
+    import {walletStore} from "@svelte-on-solana/wallet-adapter-core";
 
     const toastStore = getToastStore()
     const reInitializeDnsState = async () => {
@@ -18,9 +19,9 @@
             })
             return;
         }
-        if (!$workSpace?.baseAccount) {
+        if (!$walletStore.wallet?.publicKey) {
             toastStore.trigger({
-                message: "Couldn't verify user to sign the transaction.",
+                message: "Couldn't find wallet publicKey.",
                 background: "variant-filled-error"
             })
             return;
@@ -39,10 +40,10 @@
         fromPromise($programStore.methods.initDns(topDomains).accounts({
             // dnsState: $dnsStateStore?.publicKey, // weird, only for testing
             dnsState: dnsStatePDA,
-            signer: $workSpace?.baseAccount?.publicKey,
+            signer: $walletStore.wallet.publicKey,
             systemProgram: web3.SystemProgram.programId
         })
-            .signers([$workSpace.baseAccount])
+            .signers([$walletStore.wallet])
             .rpc())
             .subscribe({
                 next: (response) => {

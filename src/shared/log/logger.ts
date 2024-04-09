@@ -17,6 +17,15 @@ export const error: LoggingFunction = (time: string, context: string, args: any[
     console.groupEnd()
 }
 
+export const fatal: LoggingFunction = (time: string, context: string, args: any[]) => {
+    console.group(`%c ${time} ERROR in [${context}]`, "color:#f43f5e")
+    console.count('FATAL Count')
+    for (const argument of args) {
+        console.log(argument)
+    }
+    console.groupEnd()
+}
+
 const logger = (functionLevel: LoggingFunction, context: string, ...args: any[]) => {
     const time = new Date().toLocaleTimeString()
     functionLevel(time, context, args)

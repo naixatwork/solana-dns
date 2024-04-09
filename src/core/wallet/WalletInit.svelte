@@ -10,8 +10,8 @@
     const localStorageKey = 'solWalletAdapter'
     let wallets: Adapter[] = []
     onMount(async () => {
-        const {PhantomWalletAdapter} = await import('@solana/wallet-adapter-wallets')
-        wallets = [new PhantomWalletAdapter()]
+        const {PhantomWalletAdapter, SolflareWalletAdapter} = await import('@solana/wallet-adapter-wallets')
+        wallets = [new PhantomWalletAdapter(), new SolflareWalletAdapter()]
     })
 </script>
 
