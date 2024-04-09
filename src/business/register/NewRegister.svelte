@@ -105,10 +105,6 @@
             TOKEN_2022_PROGRAM_ID
         )
 
-        console.log({
-            paymentToken
-        })
-
         const creator = new PublicKey(base58.decode(creatorPubKey)) || createdMint || $walletStore.publicKey
 
         await $programStore.methods.registerDomain(
@@ -140,13 +136,15 @@
             $workSpace.baseAccount,
             // dnsState signer missing ?
         ]).rpc()
-            .then(() => {
+            .then((response) => {
+                logger(info, "registerDomain", {response})
                 toastStore.trigger({
                     message: "domain registered.",
                     background: "variant-filled-success"
                 })
             })
             .catch((err) => {
+                logger(error, "registerDomain", {err})
                 toastStore.trigger({
                     message: `failed to register domain`,
                     background: "variant-filled-error"
