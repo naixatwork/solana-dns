@@ -8,6 +8,8 @@
   - [x] use PDA `PublicKey.findProgramAddressSync`
 - [ ] implement other methods
   - lack of knowledge when it comes to seeds and ownership of domain account.
+- [ ] transfer `sol` from wallet into `workSpace.baseAccount` because base account is the signer.
+  - according to [solana-on-svelte](https://github.com/silvestrevivo/solana-svelte-counter/blob/master/app/src/routes/index.svelte) it should happen from the idl side?
 - [x] architecture
 - [x] reactivity integration between svelte and rxjs
   - still not completely sure if it's a good practice
