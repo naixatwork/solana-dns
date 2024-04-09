@@ -37,6 +37,9 @@
     let creatorPubKey = "";
     let url = "";
     let paymentToken = "";
+    let tokenAccountPubKey = "";
+    let chainlinkFeed = Keypair.generate().publicKey;
+    let chainlinkProgram = Keypair.generate().publicKey;
 
     const generateToken = async () => {
         if (!$workSpace?.baseAccount || !$workSpace.program) return;
@@ -120,15 +123,15 @@
             state: $dnsStateStore.publicKey,
             receiver: $walletStore.wallet.publicKey,
             authority: createdTokenAccount?.address,
-            chainlinkFeed: Keypair.generate().publicKey,
-            chainlinkProgram: Keypair.generate().publicKey,
+            chainlinkFeed: chainlinkFeed,
+            chainlinkProgram: chainlinkProgram,
             receiverAta: null,
             payerAta: null,
             mintAuthority: creator,
             mint: createdMint,
             metadata: getDnsIdl().metadata.address,
             rent: web3.SYSVAR_RENT_PUBKEY,
-            tokenAccount: createdTokenAccount?.address || Keypair.generate().publicKey,
+            tokenAccount: tokenAccountPubKey || createdTokenAccount?.address || Keypair.generate().publicKey,
             tokenProgram: TOKEN_PROGRAM_ID,
             tokenMetadataProgram: initializedMetadataPointerIx.programId,
             masterEdition: Keypair.generate().publicKey,
@@ -239,6 +242,15 @@
     </label>
     <div>
         <label class="label mb-2">
+            <span class="capitalize">Token Account (PublicKey)</span>
+            <input name="mint" class="input variant-ghost-primary" type="text"
+                   placeholder={Keypair.generate().publicKey.toString()}
+                   bind:value={tokenAccountPubKey}
+            />
+        </label>
+    </div>
+    <div>
+        <label class="label mb-2">
             <span class="capitalize">Creator (PublicKey)</span>
             <input name="mint" class="input variant-ghost-primary" type="text"
                    placeholder={Keypair.generate().publicKey.toString()}
@@ -252,7 +264,23 @@
             </button>
         </div>
     </div>
-    <div class="self-end">
+    <label class="label">
+        <span class="capitalize">chainlink feed (PublicKey)</span>
+        <input name="chainlinkFeed" class="input variant-ghost-primary" type="text"
+               placeholder={'chainlink feed'}
+               bind:value={chainlinkFeed}
+               required
+        />
+    </label>
+    <label class="label">
+        <span class="capitalize">chainlink program (PublicKey)</span>
+        <input name="url" class="input variant-ghost-primary" type="text"
+               placeholder={'chainlink program'}
+               bind:value={chainlinkProgram}
+               required
+        />
+    </label>
+    <div class="self-end col-span-3 flex justify-end mb-10">
         <button class="btn variant-filled-primary capitalize" type="submit">
             register domain
         </button>

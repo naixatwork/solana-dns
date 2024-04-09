@@ -14,16 +14,16 @@
     <span class="bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone uppercase">domains</span>
 </h1>
 {#await domainList$}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div class="placeholder animate-pulse h-24"/>
         <div class="placeholder animate-pulse h-24"/>
         <div class="placeholder animate-pulse h-24"/>
         <div class="placeholder animate-pulse h-24"/>
     </div>
 {:then domains}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {#each domains as domain}
-            <aside class="alert variant-ghost-primary" transition:slide|global={{ duration: 300 }}>
+            <aside class="alert variant-ghost-primary flex flex-wrap" transition:slide|global={{ duration: 300 }}>
                 <div class="min-w-[56px] flex items-center justify-center">
                     {#if domain.account.profile.avatar}
                         <img src={domain.account.profile.avatar.toString()} alt="icon"/>
@@ -34,7 +34,7 @@
                 <div class="alert-message">
                     <h3 class="h3 flex items-center gap-2">
                         {domain.account.name} <span class="badge variant-filled-success uppercase">active</span></h3>
-                    <div class="flex gap-2 justify-center items-center">
+                    <div class="flex gap-2 justify-center items-center w-4/5">
                         <button use:clipboard={domain.publicKey.toString()} type="button" class="btn-icon btn-icon-sm variant-glass-tertiary"><Copy size={16} /></button>
                         <p class="truncate w-full">{domain.publicKey}</p>
                     </div>

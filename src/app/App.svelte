@@ -99,7 +99,7 @@
                 </div>
             </svelte:fragment>
             <svelte:fragment slot="default">
-                <div class="flex gap-2">
+                <div class="flex gap-2 overflow-auto">
                     <a class="btn"
                        href="/domain"
                        use:link

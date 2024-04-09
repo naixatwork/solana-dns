@@ -17,19 +17,29 @@
 - [x] logging
 - [x] vitest, testing
 - [x] documentation
-- [ ] responsiveness
+- [x] responsiveness
 - [x] separate `devnet` from mainnet via `.env`
 - [ ] if possible fix force npm install issue
 
-## learning material
+### learning material
 
+#### solana:
 - https://docs.solanalabs.com/
 - https://docs.alchemy.com/docs/integrating-your-solana-program-with-a-web3-application
 - https://www.youtube.com/watch?v=0P8JeL3TURU&list=PLilwLeBwGuK6NsYMPP_BlVkeQgff0NwvU
 - https://github.com/silvestrevivo/solana-svelte-counter/tree/master
 - https://www.youtube.com/watch?v=zoRFutuZimc&list=PL53JxaGwWUqCr3xm4qvqbgpJ4Xbs4lCs7&index=14
 - https://www.youtube.com/watch?v=jjEZBmWI1S4&t=825s
+- https://github.com/
+- https://stackoverflow.com/
 - `depricated` https://github.com/muprotocol/mu
+
+#### svelte / frontend:
+- https://svelte.dev/
+- https://www.skeleton.dev/elements/buttons
+- https://chat.openai.com/
+- https://rxjs.dev/
+- https://lucide.dev/
 
 ## Documentation - solanaDns
 
