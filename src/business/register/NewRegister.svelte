@@ -6,7 +6,6 @@
     import {
         type Account,
         createInitializeMetadataPointerInstruction,
-        createInitializeMintInstruction,
         createMint,
         getOrCreateAssociatedTokenAccount,
         TOKEN_2022_PROGRAM_ID,
@@ -20,6 +19,8 @@
     import {firstValueFrom} from "rxjs";
     import {fromPromise} from "rxjs/internal/observable/innerFrom";
     import {workSpace} from "@svelte-on-solana/wallet-adapter-anchor";
+    import noDuplicateDomainName from "#/core/form/noDuplicateDomainName.action"
+    import base58 from "bs58";
 
     const toastStore = getToastStore()
 
@@ -29,6 +30,13 @@
 
     let createdMint: PublicKey = Keypair.generate().publicKey;
     let createdTokenAccount: Account;
+    let formElement: HTMLFormElement;
+    let domainName = "";
+    let periodYear = 1;
+    let title = "";
+    let creatorPubKey = "";
+    let url = "";
+    let paymentToken = "";
 
     const generateToken = async () => {
         if (!$workSpace?.baseAccount || !$workSpace.program) return;
@@ -76,12 +84,15 @@
         logger(info, "tokenAccount", {createdTokenAccount})
     }
 
-    const registerDomain = async () => {
+    const registerDomain = async (_: SubmitEvent) => {
+        if (!formElement.checkValidity()) {
+            formElement.reportValidity()
+        }
         if (!$workSpace.baseAccount) return;
         if (!$walletStore.wallet.publicKey) return;
         if (!$dnsStateStore.publicKey) return;
         const name = 'birthday'
-        const domainSeeds = [utf8.encode('domain'), utf8.encode(name)];
+        const domainSeeds = [utf8.encode('domain'), utf8.encode(domainName)];
         const [domainPDA] = PublicKey.findProgramAddressSync(domainSeeds, $programStore.programId);
 
         const initializedMetadataPointerIx = createInitializeMetadataPointerInstruction(
@@ -91,23 +102,29 @@
             TOKEN_2022_PROGRAM_ID
         )
 
+        console.log({
+            paymentToken
+        })
+
+        const creator = new PublicKey(base58.decode(creatorPubKey)) || createdMint || $walletStore.publicKey
+
         await $programStore.methods.registerDomain(
-            name,
-            1,
-            createdMint,
-            "https://sara-bday.vercel.app/game",
-            "birthday game",
-            "sol"
+            domainName,
+            periodYear,
+            creator,
+            url,
+            title,
+            paymentToken
         ).accounts({
             domain: domainPDA,
             state: $dnsStateStore.publicKey,
             receiver: $walletStore.wallet.publicKey,
-            authority: $walletStore.wallet.publicKey,
+            authority: createdTokenAccount?.address,
             chainlinkFeed: Keypair.generate().publicKey,
             chainlinkProgram: Keypair.generate().publicKey,
             receiverAta: null,
             payerAta: null,
-            mintAuthority: $walletStore.wallet.publicKey,
+            mintAuthority: creator,
             mint: createdMint,
             metadata: getDnsIdl().metadata.address,
             rent: web3.SYSVAR_RENT_PUBKEY,
@@ -120,8 +137,23 @@
             $workSpace.baseAccount,
             // dnsState signer missing ?
         ]).rpc()
-            .then(console.log)
-            .catch(console.log)
+            .then(() => {
+                toastStore.trigger({
+                    message: "domain registered.",
+                    background: "variant-filled-success"
+                })
+            })
+            .catch((err) => {
+                toastStore.trigger({
+                    message: `failed to register domain`,
+                    background: "variant-filled-error"
+                })
+                if (!err.message) return
+                toastStore.trigger({
+                    message: err.message,
+                    background: "variant-filled-error"
+                })
+            })
     }
 </script>
 
@@ -130,7 +162,7 @@
         <span class="bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone uppercase">Register Domain</span>
     </h1>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
     <aside class="alert variant-soft-primary">
         <!-- Icon -->
         <div>
@@ -153,12 +185,76 @@
         </div>
         <!-- Message -->
         <div class="alert-message bg-gradient-to-br from-green-500 to-purple-400 bg-clip-text text-transparent box-decoration-clone">
-            <h3 class="h3">Balance: {#await currentBalance$} loading... {:then balance} {balance} SOL {/await}</h3>
+            <h3 class="h3">Balance:
+                {#await currentBalance$} loading...{:then balance} {balance} SOL{/await}
+            </h3>
             <p class="font-bold">{$walletStore.wallet.publicKey.toString()}</p>
         </div>
     </aside>
 </div>
-<div>
-
-</div>
-<button on:click={registerDomain}>call</button>
+<form bind:this={formElement} on:submit|preventDefault={registerDomain}
+      class="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+    <div>
+        <label class="label mb-2">
+            <span class="capitalize">domain name</span>
+            <input name="domainName" use:noDuplicateDomainName={toastStore} class="input variant-ghost-primary"
+                   type="text"
+                   placeholder="try amir.sol"
+                   required
+                   bind:value={domainName}
+            />
+        </label>
+        <p class="text-warning-500">demo - try a domain name (amir.sol) that already exists.</p>
+    </div>
+    <label class="label">
+        <span class="capitalize">Period (Years)</span>
+        <input name="period" class="input variant-ghost-primary" type="number"
+               placeholder="Period"
+               required
+               min={0}
+               bind:value={periodYear}
+        />
+    </label>
+    <label class="label">
+        <span class="capitalize">Title</span>
+        <input name="url" class="input variant-ghost-primary" type="text"
+               placeholder={'title'}
+               bind:value={title}
+               required
+        />
+    </label>
+    <label class="label">
+        <span class="capitalize">URL (PublicKey)</span>
+        <input name="url" class="input variant-ghost-primary" type="text"
+               placeholder={'https://'}
+               bind:value={url}
+               required
+        />
+    </label>
+    <label class="label">
+        <span class="capitalize">payment token</span>
+        <select required bind:value={paymentToken} name="paymentToken" class="select variant-ghost-primary">
+            <option value="sol">sol</option>
+        </select>
+    </label>
+    <div>
+        <label class="label mb-2">
+            <span class="capitalize">Creator (PublicKey)</span>
+            <input name="mint" class="input variant-ghost-primary" type="text"
+                   placeholder={Keypair.generate().publicKey.toString()}
+                   bind:value={creatorPubKey}
+            />
+        </label>
+        <div class="flex flex-wrap gap-2">
+            <p class="text-secondary-500">Could also be Mint (PublicKey) or You can generate Solana Token</p>
+            <button type="button" class="btn btn-sm variant-filled-tertiary uppercase"
+                    on:click|preventDefault={generateToken}>generate token
+            </button>
+        </div>
+    </div>
+    <div class="self-end">
+        <button class="btn variant-filled-primary capitalize" type="submit">
+            register domain
+        </button>
+    </div>
+</form>

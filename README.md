@@ -1,19 +1,35 @@
-# Documentation - solanaDns
+## Track of the task
 
 ### todos
 
 - [x] public domains
-- [ ] register domains
+- [x] register domains
 - [x] init dns
   - [x] use PDA `PublicKey.findProgramAddressSync`
+- [ ] implement other methods
+  - lack of knowledge when it comes to seeds and ownership of domain account.
 - [x] architecture
+- [x] reactivity integration between svelte and rxjs
+  - still not completely sure if it's a good practice
 - [x] tailwind, scss, ui library
 - [x] logging
 - [x] vitest, testing
 - [x] documentation
 - [ ] responsiveness
-- [x] separate devnet from mainnet via `.env`
+- [x] separate `devnet` from mainnet via `.env`
 - [ ] if possible fix force npm install issue
+
+## learning material
+
+- https://docs.solanalabs.com/
+- https://docs.alchemy.com/docs/integrating-your-solana-program-with-a-web3-application
+- https://www.youtube.com/watch?v=0P8JeL3TURU&list=PLilwLeBwGuK6NsYMPP_BlVkeQgff0NwvU
+- https://github.com/silvestrevivo/solana-svelte-counter/tree/master
+- https://www.youtube.com/watch?v=zoRFutuZimc&list=PL53JxaGwWUqCr3xm4qvqbgpJ4Xbs4lCs7&index=14
+- https://www.youtube.com/watch?v=jjEZBmWI1S4&t=825s
+- `depricated` https://github.com/muprotocol/mu
+
+## Documentation - solanaDns
 
 ### Architecture and Philosophy
 
